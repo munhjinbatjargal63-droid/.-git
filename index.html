@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER LAB 4</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">CYBER<span>LAB</span>4</div>
+
+    <nav>
+        <a href="#home">Нүүр</a>
+        <a href="#network">Network Lab</a>
+        <a href="#security">Security Lab</a>
+        <a href="#soc">SOC & Logs</a>
+        <a href="#journal">Тэмдэглэл</a>
+        <a href="#team">Баг</a>
+    </nav>
+</header>
+
+<main class="hero" id="home">
+    <div class="hero-content">
+        <p class="tag">CYBERSECURITY INTERNSHIP PROJECT</p>
+
+        <h1>CYBER LAB <span>4</span></h1>
+
+        <p class="description">
+            Кибер аюулгүй байдлын мэдлэг, ур чадвар,
+            дадлага болон судалгааг нэг дор хөгжүүлэх
+            хамтын лаборатори.
+        </p>
+
+        <div class="buttons">
+            <button onclick="showMessage()">
+                Лаборатори руу нэвтрэх
+            </button>
+
+            <a href="#journal">
+                <button class="secondary">
+                    Дадлагын тэмдэглэл
+                </button>
+            </a>
+        </div>
+    </div>
+
+    <div class="status-card">
+        <div class="circle">4</div>
+        <h3>TEAM MEMBERS</h3>
+        <p>4 гишүүн · 4 төхөөрөмж · 1 лаборатори</p>
+
+        <div class="status">
+            <span class="dot"></span>
+            LAB STATUS: ONLINE
+        </div>
+    </div>
+</main>
+
+<section class="cards">
+
+    <div class="card" id="network">
+        <h2>01</h2>
+        <h3>Network Lab</h3>
+        <p>Сүлжээ, протокол, төхөөрөмжийн талаарх мэдлэг.</p>
+        <button onclick="window.location.href='network.html'">
+    Нээх
+</button>
+    </div>
+
+    <div class="card" id="security">
+        <h2>02</h2>
+        <h3>Security Lab</h3>
+        <p>Хамгаалалтын зарчим болон аюулгүй байдлын дадлага.</p>
+        <button onclick="window.location.href='security.html'">Нээх</button>
+    </div>
+
+    <div class="card" id="soc">
+        <h2>03</h2>
+        <h3>SOC & Logs</h3>
+        <p>Лог шинжилгээ, мониторинг, инцидент илрүүлэлт.</p>
+        <button onclick="window.location.href='soc.html'">Нээх</button>
+    </div>
+
+    <div class="card" id="journal">
+        <h2>04</h2>
+        <h3>Internship Journal</h3>
+        <p>Өдөр бүрийн ажлын тэмдэглэл, тайлан, ахиц.</p>
+        <button onclick="window.location.href='journal.html'">Нээх</button>
+    </div>
+
+</section>
+
+<section class="team-section" id="team">
+    <p class="tag">OUR TEAM</p>
+    <h2>CYBER LAB 4 TEAM</h2>
+
+    <div class="team-grid">
+        <div class="team-card">
+            <h3>Member 01</h3>
+            <p>Cybersecurity Student</p>
+        </div>
+
+        <div class="team-card">
+            <h3>Member 02</h3>
+            <p>Cybersecurity Student</p>
+        </div>
+
+        <div class="team-card">
+            <h3>Member 03</h3>
+            <p>Cybersecurity Student</p>
+        </div>
+
+        <div class="team-card">
+            <h3>Member 04</h3>
+            <p>Cybersecurity Student</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    CYBER LAB 4 · LEARN · BUILD · DEFEND
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
