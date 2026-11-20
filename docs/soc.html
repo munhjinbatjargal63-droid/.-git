@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOC & Logs | CYBER LAB 4</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #07111f;
+    color: #e8f0f8;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 45px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #00e5a0;
+}
+
+a {
+    color: #00e5a0;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1050px;
+    margin: auto;
+}
+
+.tag {
+    color: #00e5a0;
+    letter-spacing: 3px;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.description {
+    color: #9aabba;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: #101f30;
+    border: 1px solid #20364b;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.card h2 {
+    color: #00e5a0;
+    margin-bottom: 15px;
+}
+
+.card p {
+    color: #aab9c8;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat {
+    background: #101f30;
+    border: 1px solid #20364b;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.stat h3 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.stat p {
+    color: #9aabba;
+}
+
+.green {
+    color: #00e5a0;
+}
+
+.yellow {
+    color: #ffc857;
+}
+
+.red {
+    color: #ff647c;
+}
+
+button, select {
+    padding: 11px 16px;
+    border-radius: 7px;
+    border: 1px solid #34506a;
+    margin: 5px 5px 5px 0;
+    cursor: pointer;
+}
+
+button {
+    background: #00e5a0;
+    color: #07111f;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #00bd85;
+}
+
+select {
+    background: #07111f;
+    color: white;
+}
+
+.log-list {
+    overflow-x: auto;
+}
+
+.log {
+    display: grid;
+    grid-template-columns: 180px 110px 1fr;
+    gap: 12px;
+    padding: 15px 10px;
+    border-bottom: 1px solid #26394c;
+    min-width: 550px;
+    font-size: 14px;
+}
+
+.log-header {
+    color: #8fa6bb;
+    font-weight: bold;
+}
+
+.log-message {
+    color: #d7e2ed;
+}
+
+.result {
+    color: #00e5a0;
+    margin-top: 15px;
+    line-height: 1.7;
+}
+
+footer {
+    text-align: center;
+    color: #718398;
+    margin-top: 45px;
+}
+
+@media(max-width: 600px) {
+    body {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CYBER<span>LAB</span>4</div>
+    <a href="index.html">← Нүүр хуудас руу буцах</a>
+</header>
+
+<div class="container">
+
+    <p class="tag">SECURITY OPERATIONS CENTER</p>
+    <h1>SOC & Logs</h1>
+
+    <p class="description">
+        Системийн үйл ажиллагааны логийг унших,
+        үйл явдлыг ангилах болон аюулгүй байдлын
+        анхан шатны мониторинг хийх сургалтын лаборатори.
+    </p>
+
+    <div class="stats">
+        <div class="stat">
+            <h3 class="green" id="infoCount">0</h3>
+            <p>INFO Events</p>
+        </div>
+
+        <div class="stat">
+            <h3 class="yellow" id="warningCount">0</h3>
+            <p>WARNING Events</p>
+        </div>
+
+        <div class="stat">
+            <h3 class="red" id="errorCount">0</h3>
+            <p>ERROR Events</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>01. Log Monitoring</h2>
+
+        <p>
+            Доорх жишээ логуудаас төрлөөр нь шүүж,
+            системийн үйл явдлыг ажиглаарай.
+        </p>
+
+        <select id="filter" onchange="renderLogs()">
+            <option value="ALL">Бүх лог</option>
+            <option value="INFO">INFO</option>
+            <option value="WARNING">WARNING</option>
+            <option value="ERROR">ERROR</option>
+        </select>
+
+        <button onclick="renderLogs()">Шинэчлэх</button>
+
+        <div class="log-list">
+            <div class="log log-header">
+                <span>TIME</span>
+                <span>TYPE</span>
+                <span>MESSAGE</span>
+            </div>
+
+            <div id="logContainer"></div>
+        </div>
+
+        <div class="result" id="logResult"></div>
+    </div>
+
+    <div class="card">
+        <h2>02. Log Analysis</h2>
+
+        <p>
+            Лог шинжилгээний үед ERROR болон WARNING
+            төрлийн үйл явдлыг анхааралтай шалгана.
+        </p>
+
+        <button onclick="analyzeLogs()">Лог шинжлэх</button>
+
+        <div class="result" id="analysisResult"></div>
+    </div>
+
+    <div class="card">
+        <h2>03. SOC үндсэн ойлголт</h2>
+
+        <p><b>SOC:</b> Security Operations Center буюу
+        мэдээллийн аюулгүй байдлын үйл ажиллагааны төв.</p>
+
+        <p><b>Log:</b> Системд болсон үйл явдлын бүртгэл.</p>
+
+        <p><b>Monitoring:</b> Системийн үйл ажиллагааг
+        тогтмол ажиглах үйл явц.</p>
+
+        <p><b>Incident:</b> Аюулгүй байдалд нөлөөлж
+        болзошгүй үйл явдал.</p>
+    </div>
+
+</div>
+
+<footer>
+    CYBER LAB 4 · LEARN · BUILD · DEFEND
+</footer>
+
+<script>
+const logs = [
+    {
+        time: "09:00:12",
+        type: "INFO",
+        message: "System started successfully"
+    },
+    {
+        time: "09:05:31",
+        type: "INFO",
+        message: "User logged in successfully"
+    },
+    {
+        time: "09:12:45",
+        type: "WARNING",
+        message: "Multiple login attempts detected"
+    },
+    {
+        time: "09:15:10",
+        type: "ERROR",
+        message: "Service connection failed"
+    },
+    {
+        time: "09:20:08",
+        type: "INFO",
+        message: "System backup completed"
+    },
+    {
+        time: "09:25:42",
+        type: "WARNING",
+        message: "Unusual activity detected"
+    },
+    {
+        time: "09:30:15",
+        type: "ERROR",
+        message: "Application error occurred"
+    }
+];
+
+function renderLogs() {
+    const filter = document.getElementById("filter").value;
+    const container = document.getElementById("logContainer");
+
+    const filtered = filter === "ALL"
+        ? logs
+        : logs.filter(log => log.type === filter);
+
+    container.innerHTML = "";
+
+    filtered.forEach(log => {
+        const row = document.createElement("div");
+        row.className = "log";
+
+        const time = document.createElement("span");
+        time.textContent = log.time;
+
+        const type = document.createElement("span");
+        type.textContent = log.type;
+
+        if (log.type === "INFO") type.className = "green";
+        if (log.type === "WARNING") type.className = "yellow";
+        if (log.type === "ERROR") type.className = "red";
+
+        const message = document.createElement("span");
+        message.className = "log-message";
+        message.textContent = log.message;
+
+        row.append(time, type, message);
+        container.appendChild(row);
+    });
+
+    document.getElementById("logResult").textContent =
+        "Нийт " + filtered.length + " лог харагдаж байна.";
+}
+
+function analyzeLogs() {
+    const info = logs.filter(log => log.type === "INFO").length;
+    const warning = logs.filter(log => log.type === "WARNING").length;
+    const error = logs.filter(log => log.type === "ERROR").length;
+
+    document.getElementById("analysisResult").textContent =
+        "Шинжилгээний үр дүн: INFO = " + info +
+        ", WARNING = " + warning +
+        ", ERROR = " + error +
+        ". WARNING болон ERROR логийг нэмэлтээр шалгах шаардлагатай.";
+
+}
+
+function updateStats() {
+    document.getElementById("infoCount").textContent =
+        logs.filter(log => log.type === "INFO").length;
+
+    document.getElementById("warningCount").textContent =
+        logs.filter(log => log.type === "WARNING").length;
+
+    document.getElementById("errorCount").textContent =
+        logs.filter(log => log.type === "ERROR").length;
+}
+
+updateStats();
+renderLogs();
+</script>
+
+</body>
+</html>
