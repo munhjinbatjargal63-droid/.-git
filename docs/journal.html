@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CYBER LAB 4 | Journal</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #07111f;
+    color: #e8f0ff;
+    padding: 30px 8%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 45px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #00e5a8;
+}
+
+a {
+    color: #00e5a8;
+    text-decoration: none;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.description {
+    color: #a9bbd0;
+    margin-bottom: 30px;
+}
+
+.form-card, .entry {
+    background: #101e30;
+    border: 1px solid #1e354d;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin: 18px 0 8px;
+    color: #00e5a8;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 13px;
+    background: #07111f;
+    border: 1px solid #33475f;
+    border-radius: 7px;
+    color: white;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    margin-top: 20px;
+    padding: 13px 22px;
+    background: #00e5a8;
+    color: #07111f;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00ffbf;
+}
+
+.delete-btn {
+    background: #d94b5b;
+    color: white;
+    margin-left: 8px;
+}
+
+.entry p {
+    color: #a9bbd0;
+    margin-top: 12px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.entry h3 {
+    color: #00e5a8;
+}
+
+.entry small {
+    color: #8296aa;
+}
+
+.empty {
+    color: #8296aa;
+    padding: 20px 0;
+}
+
+@media(max-width:600px) {
+    body {
+        padding: 20px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CYBER<span>LAB</span>4</div>
+    <a href="index.html">← Нүүр хуудас</a>
+</header>
+
+<h1>INTERNSHIP JOURNAL</h1>
+
+<p class="description">
+    CYBER LAB 4 - Өдөр тутмын дадлагын тэмдэглэл
+</p>
+
+<div class="form-card">
+
+    <h2>Шинэ тэмдэглэл</h2>
+
+    <label>Огноо</label>
+    <input type="date" id="date">
+
+    <label>Өнөөдөр хийсэн ажил</label>
+    <textarea id="work"
+    placeholder="Өнөөдөр ямар ажил хийсэн бэ?"></textarea>
+
+    <label>Сурсан зүйл</label>
+    <textarea id="learning"
+    placeholder="Ямар шинэ мэдлэг, ур чадвар эзэмшсэн бэ?"></textarea>
+
+    <label>Тулгарсан асуудал</label>
+    <textarea id="problem"
+    placeholder="Ямар асуудал тулгарсан бэ?"></textarea>
+
+    <button onclick="saveEntry()">Тэмдэглэл хадгалах</button>
+
+</div>
+
+<h2>Өмнөх тэмдэглэлүүд</h2>
+
+<div id="entries"></div>
+
+<script>
+const STORAGE_KEY = "cyberLab4Journal";
+
+document.getElementById("date").value =
+    new Date().toLocaleDateString("en-CA");
+
+function getEntries() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+}
+
+function saveEntry() {
+    const date = document.getElementById("date").value;
+    const work = document.getElementById("work").value.trim();
+    const learning = document.getElementById("learning").value.trim();
+    const problem = document.getElementById("problem").value.trim();
+
+    if (!date || !work || !learning) {
+        alert("Огноо, хийсэн ажил, сурсан зүйлээ бөглөнө үү!");
+        return;
+    }
+
+    const entries = getEntries();
+
+    entries.unshift({
+        id: Date.now(),
+        date,
+        work,
+        learning,
+        problem
+    });
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+
+    document.getElementById("work").value = "";
+    document.getElementById("learning").value = "";
+    document.getElementById("problem").value = "";
+
+    renderEntries();
+
+    alert("Тэмдэглэл амжилттай хадгалагдлаа!");
+}
+
+function deleteEntry(id) {
+    if (!confirm("Энэ тэмдэглэлийг устгах уу?")) return;
+
+    const entries = getEntries().filter(entry => entry.id !== id);
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+
+    renderEntries();
+}
+
+function renderEntries() {
+    const container = document.getElementById("entries");
+    const entries = getEntries();
+
+    container.innerHTML = "";
+
+    if (entries.length === 0) {
+        container.innerHTML =
+            '<p class="empty">Одоогоор тэмдэглэл байхгүй байна.</p>';
+        return;
+    }
+
+    entries.forEach(entry => {
+        const card = document.createElement("div");
+        card.className = "entry";
+
+        const title = document.createElement("h3");
+        title.textContent = entry.date;
+
+        const work = document.createElement("p");
+        work.textContent = "Хийсэн ажил: " + entry.work;
+
+        const learning = document.createElement("p");
+        learning.textContent = "Сурсан зүйл: " + entry.learning;
+
+        const problem = document.createElement("p");
+        problem.textContent = "Тулгарсан асуудал: " +
+            (entry.problem || "Байхгүй");
+
+        const remove = document.createElement("button");
+        remove.className = "delete-btn";
+        remove.textContent = "Устгах";
+        remove.addEventListener("click", () => deleteEntry(entry.id));
+
+        card.append(title, work, learning, problem, remove);
+        container.appendChild(card);
+    });
+}
+
+renderEntries();
+</script>
+
+</body>
+</html>
