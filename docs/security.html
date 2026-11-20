@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Lab | CYBER LAB 4</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #07111f;
+    color: #e8f0f8;
+    font-family: Arial, sans-serif;
+    padding: 30px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.logo span {
+    color: #00e5a0;
+}
+
+a {
+    color: #00e5a0;
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.tag {
+    color: #00e5a0;
+    letter-spacing: 3px;
+    font-size: 13px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.description {
+    color: #9aabba;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+.card {
+    background: #101f30;
+    border: 1px solid #20364b;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+.card h2 {
+    color: #00e5a0;
+    margin-bottom: 15px;
+}
+
+.card p {
+    color: #aab9c8;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+button {
+    background: #00e5a0;
+    color: #07111f;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #00bd85;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    margin: 10px 0;
+    border-radius: 7px;
+    border: 1px solid #34506a;
+    background: #07111f;
+    color: white;
+}
+
+.result {
+    margin-top: 15px;
+    line-height: 1.8;
+    color: #00e5a0;
+}
+
+.question {
+    margin-top: 20px;
+}
+
+.question button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: #1a3045;
+    color: white;
+    border: 1px solid #34506a;
+}
+
+.question button:hover {
+    background: #25445f;
+}
+
+footer {
+    text-align: center;
+    color: #718398;
+    margin-top: 50px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">CYBER<span>LAB</span>4</div>
+    <a href="index.html">← Нүүр хуудас руу буцах</a>
+</header>
+
+<div class="container">
+
+    <p class="tag">CYBERSECURITY TRAINING</p>
+    <h1>Security Lab</h1>
+
+    <p class="description">
+        Кибер аюулгүй байдлын үндсэн ойлголт,
+        нууц үгийн хамгаалалт болон фишинг халдлагыг
+        таних мэдлэгээ шалгах сургалтын лаборатори.
+    </p>
+
+    <div class="card">
+        <h2>01. Password Security</h2>
+        <p>
+            Нууц үгийн аюулгүй байдал нь мэдээллийн
+            хамгаалалтын чухал хэсэг юм.
+            Урт, давтагдашгүй нууц үг ашиглах хэрэгтэй.
+        </p>
+
+        <p>
+            Доорх талбарт зөвхөн жишээ нууц үг бичиж
+            шалгана уу. Жинхэнэ нууц үгээ бүү оруулаарай.
+        </p>
+
+        <input type="text" id="password"
+        placeholder="Жишээ нууц үг оруулна уу">
+
+        <button onclick="checkPassword()">Шалгах</button>
+
+        <div class="result" id="passwordResult"></div>
+    </div>
+
+    <div class="card">
+        <h2>02. Phishing Awareness</h2>
+        <p>
+            Фишинг гэдэг нь хуурамч мессеж, имэйл,
+            вебсайтаар дамжуулан хэрэглэгчийн мэдээллийг
+            авахыг оролддог цахим залилан юм.
+        </p>
+
+        <p><b>Жишээ:</b> "Таны данс хаагдах гэж байна.
+        Доорх холбоосоор яаралтай нэвтэрнэ үү."</p>
+
+        <p>Ийм мессеж ирвэл хамгийн зөв үйлдэл аль вэ?</p>
+
+        <div class="question">
+            <button onclick="answer(false)">
+                A. Холбоос дээр шууд дарах
+            </button>
+
+            <button onclick="answer(true)">
+                B. Илгээгч болон холбоосыг шалгаж,
+                албан ёсны сувгаар баталгаажуулах
+            </button>
+
+            <button onclick="answer(false)">
+                C. Нууц үгээ мессежээр явуулах
+            </button>
+        </div>
+
+        <div class="result" id="quizResult"></div>
+    </div>
+
+    <div class="card">
+        <h2>03. Security Best Practices</h2>
+
+        <p>Кибер аюулгүй байдлын үндсэн зөвлөмжүүд:</p>
+
+        <p>✓ Давтагдашгүй, урт нууц үг ашиглах</p>
+        <p>✓ Хоёр шатлалт баталгаажуулалт идэвхжүүлэх</p>
+        <p>✓ Программ хангамжаа тогтмол шинэчлэх</p>
+        <p>✓ Сэжигтэй холбоос дээр дарахгүй байх</p>
+        <p>✓ Чухал мэдээллээ нөөцлөх</p>
+    </div>
+
+</div>
+
+<footer>
+    CYBER LAB 4 · LEARN · BUILD · DEFEND
+</footer>
+
+<script>
+function checkPassword() {
+    const password = document.getElementById("password").value;
+    const result = document.getElementById("passwordResult");
+
+    if (password.length === 0) {
+        result.textContent = "Жишээ нууц үгээ оруулна уу.";
+        return;
+    }
+
+    let score = 0;
+
+    if (password.length >= 12) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/[0-9]/.test(password)) score++;
+    if (/[^A-Za-z0-9]/.test(password)) score++;
+
+    if (score <= 2) {
+        result.textContent = "Үнэлгээ: Сул. Илүү урт, олон төрлийн тэмдэгттэй жишээ ашиглаарай.";
+    } else if (score <= 4) {
+        result.textContent = "Үнэлгээ: Дунд. Нууц үгийн хамгаалалтаа сайжруулах боломжтой.";
+    } else {
+        result.textContent = "Үнэлгээ: Сайн. Гэхдээ энэ бол зөвхөн энгийн сургалтын шалгалт юм.";
+    }
+}
+
+function answer(correct) {
+    const result = document.getElementById("quizResult");
+
+    if (correct) {
+        result.textContent = "Зөв! Илгээгч болон холбоосыг шалгаж, албан ёсны сувгаар баталгаажуулах хэрэгтэй.";
+    } else {
+        result.textContent = "Буруу. Сэжигтэй холбоос дээр дарж, нууц мэдээллээ бүү илгээгээрэй.";
+    }
+}
+</script>
+
+</body>
+</html>
